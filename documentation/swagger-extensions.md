@@ -5,14 +5,36 @@ The following documents describes AutoRest specific vendor extensions for [Swagg
 
 ## Generic Extensions
 * [x-ms-code-generation-settings](#x-ms-code-generation-settings) - enables passing code generation settings via swagger document
+  * More settings
 * [x-ms-skip-url-encoding](#x-ms-skip-url-encoding) - skips URL encoding for path and query parameters
+  * If you know a URL is already encoded, you don't need to double-encode
 * [x-ms-enum](#x-ms-enum) - additional metadata for enums
+  * Swagger focuses on restriction, this is for better code generation; IF OAI v3 has something useful, we can use this
+  * This helps in C# with binary compatibility and versioning
+  * We can also model as string (as a fall-back in some languages)
+  * Feature requests: 
+    * Ability to set integer values
+    * Ability to set additional documentation
 * [x-ms-parameter-grouping](#x-ms-parameter-grouping) - groups method parameters in generated clients
+  * (lower pri, probably not for OAI)
 * [x-ms-parameter-location](#x-ms-parameter-location) - provides a mechanism to specify that the global parameter is actually a parameter on the operation and not a client property.
+  * When we make global params, we put them into a client so we can re-use; (autorest specific for client output code)
+  * This enables parameters to be local (instead of global)
 * [x-ms-paths](#x-ms-paths) - alternative to [Paths Object](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#pathsObject) that allows [Path Item Object](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#pathItemObject) to have query parameters for non pure REST APIs
+  * The OAI paths object doesn't allow discrimination based on the query params
+  * This relaxes that restriction
+  * We have to do this b/c our APIs work this way, but it's not a great REST-like practice
+  * This allows for separate operations 
+  * We probably want to discourage but not disallow
 * [x-ms-client-name](#x-ms-client-name) - allows control over identifier names used in client-side code generation for parameters and schema properties.
+  * AutoREST specific
+  * Might want to enable specifying by language
+  * Having control over naming schemes is useful
 * [x-ms-external](#x-ms-external) - allows specific [Definition Objects](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#definitionsObject) to be excluded from code generation
+  * Allows re-use 
+  * Would be MORE valuable to re-use an existing class or enum and be able to over-ride
 * [x-ms-discriminator-value](#x-ms-discriminator-value) - maps discriminator value on the wire with the definition name.
+ 
 * [x-ms-client-flatten](#x-ms-client-flatten) - flattens client model property or parameter.
 * [x-ms-parameterized-host](#x-ms-parameterized-host) - replaces the Swagger host with a host template that can be replaced with variable parameters.
 
